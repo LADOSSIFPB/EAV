@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link href="resources/dist/css/vendor/bootstrap.min.css"
+		rel="stylesheet" />
+
+	<link href="resources/dist/css/flat-ui.css" rel="stylesheet" />
+
+	<title>EAV</title>
+</h:head>
+
+<h:body
+	style="background: url(resources/img/airplane.jpg) no-repeat; background-size: 100%;">
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12"
+				style="background-color: white; border-radius: 3px; padding: 4%;">
+				<h4>Cadastre-se agora mesmo!</h4>
+				<h:form class="form-horizontal" role="form">
+
+					<div class="form-group">
+						<label for="inputName" class="col-lg-2 control-label">Nome</label>
+						<div class="col-lg-10">
+							<h:inputText class="form-control" id="inputName"
+								placeholder="Nome" required="true"
+								value="#{loginBean.usuario.nomeUsuario}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputCPF" class="col-lg-2 control-label">CPF</label>
+						<div class="col-lg-10">
+							<h:inputText class="form-control" id="inputCPF" placeholder="CPF"
+								required="true" value="#{loginBean.usuario.cpf}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="inputEmail1" class="col-lg-2 control-label">Email</label>
+						<div class="col-lg-10">
+							<h:inputText type="email" class="form-control" id="inputEmail1"
+								placeholder="Email" required="true"
+								value="#{loginBean.usuario.email}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputPassword1" class="col-lg-2 control-label">Password</label>
+						<div class="col-lg-10">
+							<h:inputSecret class="form-control" id="inputPassword1"
+								placeholder="Password" required="true"
+								value="#{loginBean.usuario.senha}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<label class="checkbox" for="checkbox3"> <input
+								type="checkbox" data-toggle="checkbox" value="" id="checkbox3"
+								required="true" /> Li e concordo com os termos de compromisso
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<h:commandButton actionListener="#{loginBean.singup()}"
+								value="Finalizar cadastro" class="btn btn-default" />
+						</div>
+					</div>
+				</h:form>
+			</div>
+			<!-- /.col-md-12 -->
+		</div>
+		<!-- /.row -->
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="resources/dist/js/vendor/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+
+	<script src="resources/dist/js/flat-ui.min.js"></script>
+
+	<script src="resources/docs/assets/js/application.js"></script>
+</h:body>
+</html>
