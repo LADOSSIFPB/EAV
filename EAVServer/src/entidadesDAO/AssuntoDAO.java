@@ -6,12 +6,14 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 
 import br.edu.entidade.Assunto;
 import br.edu.entidade.Disciplina;
+import br.edu.util.EAVException;
 
-public class AssuntoDAO implements GenericDAO<Assunto> {
+public class AssuntoDAO extends ServiceDAO implements GenericDAO<Assunto> {
 
 	@Override
 	public Assunto create(Assunto assunto) {
@@ -61,9 +63,19 @@ public class AssuntoDAO implements GenericDAO<Assunto> {
 	}
 
 	@Override
-	public int delete(Assunto assunto) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void delete(Assunto assunto) throws EAVException {
+		ServiceDAO.iniciarConexao();
+
+		try {
+			em.getTransaction().begin();
+			em.remove(assunto);
+			em.getTransaction().commit();
+		} catch (EntityExistsException | RollbackException e) {
+			throw new EAVException(EAVException.ASSUNTO_INVALIDO);
+		}
+		finally {
+			ServiceDAO.fecharConexao();
+		}
 	}
 
 	@Override
@@ -120,7 +132,7 @@ public class AssuntoDAO implements GenericDAO<Assunto> {
 		
 		try {
 			TypedQuery<Assunto> query = em.createNamedQuery("Assunto.findByDisciplina",
-					Assunto.class).setParameter("discilpina_id", disciplina);
+					Assunto.class).setParameter("disciplina_id", disciplina);
 			assuntos = query.getResultList();
 		} catch (Exception e) {
 			// TODO: Verificar se o hibernate possui um status de falha ou

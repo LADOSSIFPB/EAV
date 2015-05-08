@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<!-- Static navbar -->
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+				</button>
+				<a class="navbar-brand" href="#">EAV</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Início</a></li>
+					<li><a href="#about">Perfil</a></li>
+				</ul>
+
+				<h:form role="search" class="navbar-form navbar-right">
+					<div class="form-group">
+						<input type="text" placeholder="Search" class="form-control" />
+					</div>
+
+					<button class="btn btn-inverse dropdown-toggle" type="button"
+						data-toggle="dropdown">
+						Opções<span class="fui-gear"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-inverse" role="menu">
+						<li><a href="#">Opções da conta</a></li>
+						<li class="divider"></li>
+						<li><h:commandLink action="#{loginBean.logout()}" value="">Sair</h:commandLink></li>
+					</ul>
+				</h:form>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+</ui:composition>

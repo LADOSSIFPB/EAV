@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 
 import br.edu.entidade.Assunto;
 import br.edu.entidade.Disciplina;
+import br.edu.entidade.OpcaoCorreta;
 import br.edu.entidade.Questao;
 import br.edu.entidade.Usuario;
 
@@ -44,5 +45,22 @@ public interface EAVService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<Assunto> assuntoGetByDisciplina(Disciplina disciplina);
+	
+	@GET
+	@Path("/consulta/assuntosGetAll")
+	@Produces("application/json")
+	public List<Assunto> assuntosGetAll();
+	
+	@POST
+	@Path("/consulta/questoesNavegacao")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Questao> questoesNavegacao(List<Assunto> assuntos);
+	
+	@POST
+	@Path("/consulta/resultadoSimulado")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public int resultadoSimulado(List<OpcaoCorreta> opcaoCorretas);
 
 }

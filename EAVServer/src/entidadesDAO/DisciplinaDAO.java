@@ -6,11 +6,14 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.RollbackException;
+import javax.persistence.TransactionRequiredException;
 import javax.persistence.TypedQuery;
 
 import br.edu.entidade.Disciplina;
+import br.edu.util.EAVException;
 
-public class DisciplinaDAO implements GenericDAO<Disciplina> {
+public class DisciplinaDAO extends ServiceDAO implements GenericDAO<Disciplina> {
 
 	@Override
 	public Disciplina create(Disciplina disciplina) {
@@ -24,11 +27,10 @@ public class DisciplinaDAO implements GenericDAO<Disciplina> {
 			em.getTransaction().begin();
 			em.persist(disciplina);
 			em.getTransaction().commit();
-
-		} catch (EntityExistsException e) {
-			// TODO: Verificar se o hibernate possui um status de falha ou
-			// sucesso
-
+		} catch (EntityExistsException eee) {
+			// TODO: tratar erro
+		} catch (IllegalArgumentException iae) {
+			// TODO: tratar erro
 		} finally {
 			em.close();
 			emf.close();
@@ -113,9 +115,18 @@ public class DisciplinaDAO implements GenericDAO<Disciplina> {
 	}
 
 	@Override
-	public int delete(Disciplina entity) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void delete(Disciplina disciplina) throws EAVException {
+		ServiceDAO.iniciarConexao();
+
+		try {
+			em.getTransaction().begin();
+			em.remove(disciplina);
+			em.getTransaction().commit();
+		} catch (EntityExistsException | RollbackException e) {
+			throw new EAVException(EAVException.DISCIPLINA_INVALIDA);
+		} finally {
+			ServiceDAO.fecharConexao();
+		}
 	}
 
 }

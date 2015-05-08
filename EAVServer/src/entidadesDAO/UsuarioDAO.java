@@ -4,26 +4,26 @@ import java.util.List;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.NoResultException;
+import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 
 import br.edu.entidade.Usuario;
+import br.edu.util.EAVException;
 
 public class UsuarioDAO extends ServiceDAO implements GenericDAO<Usuario> {
 
 	@Override
-	public Usuario create(Usuario usuario) {
-
+	public Usuario create(Usuario usuario) throws EAVException {
 		ServiceDAO.iniciarConexao();
 
 		try {
 			em.getTransaction().begin();
 			em.persist(usuario);
 			em.getTransaction().commit();
-		} catch (EntityExistsException e) {
-			// TODO: Verificar se o hibernate possui um status de falha ou
-			// sucesso
-
-		} finally {
+		} catch (EntityExistsException | RollbackException e) {
+			throw new EAVException(EAVException.USUARIO_INVALIDO);
+		}
+		finally {
 			ServiceDAO.fecharConexao();
 		}
 
@@ -41,8 +41,7 @@ public class UsuarioDAO extends ServiceDAO implements GenericDAO<Usuario> {
 			em.getTransaction().commit();
 
 		} catch (Exception e) {
-			// TODO: Verificar se o hibernate possui um status de falha ou
-			// sucesso
+			// TODO: verificar esse erro
 			usuario = null;
 		} finally {
 			ServiceDAO.fecharConexao();
@@ -60,7 +59,6 @@ public class UsuarioDAO extends ServiceDAO implements GenericDAO<Usuario> {
 					.setParameter("email", usuario.getEmail())
 					.setParameter("senha", usuario.getSenha())
 					.getSingleResult();
-
 		} catch (IllegalArgumentException e) {
 			usuario = null;
 
@@ -83,8 +81,7 @@ public class UsuarioDAO extends ServiceDAO implements GenericDAO<Usuario> {
 		try {
 			usuario = em.find(Usuario.class, usuario.getCpf());
 		} catch (Exception e) {
-			// TODO: Verificar se o hibernate possui um status de falha ou
-			// sucesso
+			// TODO: verificar esse erro
 			usuario = null;
 		} finally {
 			ServiceDAO.fecharConexao();
@@ -107,8 +104,7 @@ public class UsuarioDAO extends ServiceDAO implements GenericDAO<Usuario> {
 			usuarios = query.getResultList();
 
 		} catch (Exception e) {
-			// TODO: Verificar se o hibernate possui um status de falha ou
-			// sucesso
+			// TODO: verificar esse erro
 		} finally {
 			ServiceDAO.fecharConexao();
 		}
@@ -117,9 +113,21 @@ public class UsuarioDAO extends ServiceDAO implements GenericDAO<Usuario> {
 	}
 
 	@Override
-	public int delete(Usuario entity) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void delete(Usuario usuario) throws EAVException {
+		ServiceDAO.iniciarConexao();
+		
+		Usuario usuarioRemove = em.find(Usuario.class, usuario.getCpf());
+
+		try {
+			em.getTransaction().begin();
+			em.remove(usuarioRemove);
+			em.getTransaction().commit();
+		} catch (EntityExistsException | RollbackException | IllegalArgumentException e) {
+			throw new EAVException(EAVException.USUARIO_INVALIDO);
+		}
+		finally {
+			ServiceDAO.fecharConexao();
+		}
 	}
 
 }

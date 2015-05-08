@@ -11,9 +11,15 @@ import javax.ws.rs.Produces;
 
 import br.edu.entidade.Assunto;
 import br.edu.entidade.Disciplina;
+import br.edu.entidade.Opcao;
+import br.edu.entidade.OpcaoCorreta;
+import br.edu.entidade.Questao;
 import br.edu.entidade.Usuario;
 import entidadesDAO.AssuntoDAO;
 import entidadesDAO.DisciplinaDAO;
+import entidadesDAO.OpcaoCorretaDAO;
+import entidadesDAO.OpcaoDAO;
+import entidadesDAO.QuestaoDAO;
 import entidadesDAO.UsuarioDAO;
 
 @Path("consulta")
@@ -22,7 +28,7 @@ public class ServiceConsulta {
 	@GET
 	@Path("/usuarioFindAll")
 	@Produces("application/json")
-	public List<Usuario> getAll() {
+	public List<Usuario> usuarioGetAll() {
 
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 
@@ -42,6 +48,18 @@ public class ServiceConsulta {
 
 		return disciplinas;
 	}
+	
+	@GET
+	@Path("/assuntosGetAll")
+	@Produces("application/json")
+	public List<Assunto> assuntosGetAll() {
+
+		AssuntoDAO assuntoDAO = new AssuntoDAO();
+
+		List<Assunto> assuntos = assuntoDAO.getAll();
+
+		return assuntos;
+	}
 
 	@POST
 	@Path("/login")
@@ -60,11 +78,70 @@ public class ServiceConsulta {
 	public List<Assunto> assuntoGetByDisciplina(Disciplina disciplina) {
 		AssuntoDAO dao = new AssuntoDAO();
 		List<Assunto> assuntos = new LinkedList<Assunto>();
-		
-		if(disciplina.getIdDisciplina() != 0)
-		assuntos = dao.findByDisciplina(disciplina);
-		
+
+		if (disciplina.getIdDisciplina() != 0)
+			assuntos = dao.findByDisciplina(disciplina);
+
 		return assuntos;
+	}
+
+	@POST
+	@Path("/questoesNavegacao")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Questao> questoesNavegacao(List<Assunto> assuntos) {
+
+		List<Questao> questoes;
+		List<Questao> questoesRetorno = new LinkedList<Questao>();
+
+		AssuntoDAO assuntoDAO = new AssuntoDAO();
+		QuestaoDAO questaoDAO = new QuestaoDAO();
+		OpcaoDAO opcaoDAO = new OpcaoDAO();
+		OpcaoCorretaDAO opcaoCorretaDAO = new OpcaoCorretaDAO();
+
+		OpcaoCorreta opcaoCorreta = new OpcaoCorreta();
+
+		for (Assunto assuntoConsulta : assuntos) {
+			questoes = new LinkedList<Questao>();
+			assuntoConsulta = assuntoDAO.findById(assuntoConsulta);
+			questoes.addAll(questaoDAO.findByAssunto(assuntoConsulta));
+
+			for (Questao questaoConsulta : questoes) {
+				questaoConsulta.setOpcoes(opcaoDAO
+						.findByQuestao(questaoConsulta));
+				opcaoCorreta = opcaoCorretaDAO.findById(questaoConsulta);
+
+				for (Opcao opcaoVerificacao : questaoConsulta.getOpcoes()) {
+					if (opcaoCorreta.getOpcao().getIdOpcao() == opcaoVerificacao
+							.getIdOpcao())
+						opcaoVerificacao.setOpcaoCorreta(true);
+				}
+
+				questoesRetorno.add(questaoConsulta);
+			}
+
+		}
+
+		return questoesRetorno;
+	}
+	
+	@POST
+	@Path("/resultadoSimulado")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public int resultadoSimulado(List<OpcaoCorreta> opcaoCorretas) {
+
+		int acertos = 0;
+		
+		OpcaoCorretaDAO opcaoCorretaDAO = new OpcaoCorretaDAO();
+		
+		for (OpcaoCorreta opcaoCorreta : opcaoCorretas) {
+			if(opcaoCorretaDAO.findByResposta(opcaoCorreta))
+				acertos++;
+			
+		}
+		
+		return acertos;
 	}
 
 }

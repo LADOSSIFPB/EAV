@@ -16,6 +16,13 @@
 
 <h:body>
 
+	<style>
+body {
+	padding-top: 70px;
+	min-width: 650px;
+}
+</style>
+
 	<!-- Static navbar -->
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container">
@@ -24,14 +31,14 @@
 					data-target=".navbar-collapse">
 					<span class="sr-only">Toggle navigation</span>
 				</button>
-				<a class="navbar-brand" href="#">EAV</a>
+				<a class="navbar-brand" href="index.xhtml">EAV</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="#">Início</a></li>
 					<li><a href="#about">Perfil</a></li>
 				</ul>
-				
+
 				<h:form role="search" class="navbar-form navbar-right">
 					<div class="form-group">
 						<input type="text" placeholder="Search" class="form-control" />
@@ -44,13 +51,87 @@
 					<ul class="dropdown-menu dropdown-menu-inverse" role="menu">
 						<li><a href="#">Opções da conta</a></li>
 						<li class="divider"></li>
-						<li><h:commandLink action="#{loginBean.logout()}" value="" >Sair</h:commandLink></li>
+						<li><h:commandLink action="#{loginBean.logout()}" value="">Sair</h:commandLink></li>
 					</ul>
 				</h:form>
 			</div>
 			<!--/.nav-collapse -->
 		</div>
 	</div>
+
+	<div class="container">
+
+		<div class="row demo-tiles">
+			<div class="col-xs-4">
+				<div class="tile">
+					<h:graphicImage value="/resources/img/icons/png/compass.png"
+						alt="navegacao aerea" class="tile-image big-illustration" />
+					<h3 class="tile-title">Navegação Aerea</h3>
+					<p>100% convertable to HTML/CSS layout.</p>
+					<h:link class="btn btn-primary btn-large btn-block"
+						outcome="selecionarconteudonavegacao" value="Iniciar">
+					</h:link>
+				</div>
+			</div>
+
+			<div class="col-xs-4">
+				<div class="tile">
+					<h:graphicImage value="/resources/img/icons/png/plane.png"
+						alt="teoria de voo" class="tile-image big-illustration" />
+					<h3 class="tile-title">Teoria de Voo</h3>
+					<p>100% convertable to HTML/CSS layout.</p>
+					<a class="btn btn-primary btn-large btn-block"
+						href="http://designmodo.com/flat">Iniciar</a>
+				</div>
+			</div>
+
+			<div class="col-xs-4">
+				<div class="tile">
+					<h:graphicImage value="/resources/img/icons/png/sun.png"
+						alt="meteorologia" class="tile-image big-illustration" />
+					<h3 class="tile-title">Meteorologia</h3>
+					<p>100% convertable to HTML/CSS layout.</p>
+					<a class="btn btn-primary btn-large btn-block"
+						href="http://designmodo.com/flat">Iniciar</a>
+				</div>
+			</div>
+
+			<div class="col-xs-4">
+				<div class="tile">
+					<h:graphicImage value="/resources/img/icons/png/Peca.png"
+						alt="conhecimentos técnicos" class="tile-image big-illustration" />
+					<h3 class="tile-title">Conhecimentos técnicos</h3>
+					<p>100% convertable to HTML/CSS layout.</p>
+					<a class="btn btn-primary btn-large btn-block"
+						href="http://designmodo.com/flat">Iniciar</a>
+				</div>
+			</div>
+
+			<div class="col-xs-4">
+				<div class="tile">
+					<h:graphicImage value="/resources/img/icons/png/tower.png"
+						alt="regulamento de trafego" class="tile-image big-illustration" />
+					<h3 class="tile-title">Regulamento de tráfego aereo</h3>
+					<p>100% convertable to HTML/CSS layout.</p>
+					<a class="btn btn-primary btn-large btn-block"
+						href="http://designmodo.com/flat">Iniciar</a>
+				</div>
+			</div>
+
+			<div class="col-xs-4">
+				<div class="tile">
+					<h:graphicImage value="/resources/img/icons/png/Clipboard.png"
+						alt="Compas" class="tile-image big-illustration" />
+
+					<h3 class="tile-title">Simular prova completa</h3>
+					<p>100% convertable to HTML/CSS layout.</p>
+					<a class="btn btn-primary btn-large btn-block"
+						href="http://designmodo.com/flat">Iniciar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="../resources/dist/js/vendor/jquery.min.js"></script>

@@ -17,8 +17,9 @@ public class Disciplina {
 
 	@Id
 	@GeneratedValue
+	@Column(name = "id_disciplina")
 	private int idDisciplina;
-	@Column(name = "nm_discilpina")
+	@Column(name = "nm_disciplina", nullable = false)
 	private String nomeDisciplina;
 
 	public int getIdDisciplina() {

@@ -1,3 +1,4 @@
+
 package service;
 
 import javax.ws.rs.Consumes;
@@ -11,6 +12,7 @@ import br.edu.entidade.Opcao;
 import br.edu.entidade.OpcaoCorreta;
 import br.edu.entidade.Questao;
 import br.edu.entidade.Usuario;
+import br.edu.util.EAVException;
 import entidadesDAO.AssuntoDAO;
 import entidadesDAO.DisciplinaDAO;
 import entidadesDAO.OpcaoCorretaDAO;
@@ -27,8 +29,7 @@ public class ServiceCadastro {
 	@Path("/usuario")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Usuario cadastrarUsuario(Usuario usuario) {
-
+	public Usuario cadastrarUsuario(Usuario usuario) throws EAVException {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 
 		usuarioDAO.create(usuario);

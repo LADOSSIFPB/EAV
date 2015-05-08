@@ -3,6 +3,7 @@ package br.edu.entidade;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Questao.findAll", query = "SELECT q FROM Questao q"),
+		@NamedQuery(name = "Questao.findByAssunto", query = "SELECT q FROM Questao q WHERE q.assunto = :assunto_id"),
 		@NamedQuery(name = "Questao.update", query = "SELECT q FROM Questao q WHERE q.idQuestao = :idQuestao") })
 @Table(name = "tb_questao")
 @XmlRootElement(name = "questao")
@@ -27,7 +29,7 @@ public class Questao {
 	@GeneratedValue
 	@Column(name = "id_questao")
 	private int idQuestao;
-	@Column(name = "nome_questao")
+	@Column(name = "nome_questao", length = 900, nullable = false)
 	private String nomeQuestao;
 	@ManyToOne
 	@JoinColumn(name = "assunto_id")
@@ -35,6 +37,12 @@ public class Questao {
 
 	@Transient
 	private List<Opcao> opcoes = new LinkedList<Opcao>();
+
+	@Transient
+	private List<SelectItem> opcoesSelectItem;
+	
+	@Transient
+	private int resposta;
 
 	public int getIdQuestao() {
 		return idQuestao;
@@ -66,6 +74,22 @@ public class Questao {
 
 	public void setOpcoes(List<Opcao> opcoes) {
 		this.opcoes = opcoes;
+	}
+
+	public List<SelectItem> getOpcoesSelectItem() {
+		return opcoesSelectItem;
+	}
+
+	public void setOpcoesSelectItem(List<SelectItem> opcoesSelectItem) {
+		this.opcoesSelectItem = opcoesSelectItem;
+	}
+
+	public int getResposta() {
+		return resposta;
+	}
+
+	public void setResposta(int resposta) {
+		this.resposta = resposta;
 	}
 
 }

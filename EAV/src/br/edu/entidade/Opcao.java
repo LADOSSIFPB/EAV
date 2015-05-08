@@ -14,7 +14,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "tb_opcao")
-@NamedQueries({ @NamedQuery(name = "Opcao.findAll", query = "SELECT o FROM Opcao o") })
+@NamedQueries({
+		@NamedQuery(name = "Opcao.findAll", query = "SELECT o FROM Opcao o"),
+		@NamedQuery(name = "Opcao.findByQuestao", query = "SELECT o FROM Opcao o WHERE o.questao = :questao_id") })
 @XmlRootElement(name = "opcao")
 public class Opcao {
 
@@ -22,7 +24,7 @@ public class Opcao {
 	@GeneratedValue
 	@Column(name = "id_opcao")
 	private int idOpcao;
-	@Column(name = "nome_opcao")
+	@Column(name = "nome_opcao", nullable = false)
 	private String nomeOpcao;
 	@ManyToOne
 	@JoinColumn(name = "questao_id")

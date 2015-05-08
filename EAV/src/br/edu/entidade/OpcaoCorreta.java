@@ -13,12 +13,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @Table(name = "tb_opcao_correta")
-@NamedQueries({ @NamedQuery(name = "OpcaoCorrete.findAll", query = "SELECT o FROM OpcaoCorreta o") })
+@NamedQueries({
+		@NamedQuery(name = "OpcaoCorreta.findAll", query = "SELECT o FROM OpcaoCorreta o"),
+		@NamedQuery(name = "OpcaoCorreta.resposta", query = "SELECT o FROM OpcaoCorreta o WHERE o.opcao = :opcao_id AND o.questao = :questao_id")
+})
 @XmlRootElement(name = "opcaoCorreta")
-public class OpcaoCorreta implements Serializable{
+public class OpcaoCorreta implements Serializable {
 
 	private static final long serialVersionUID = 4763951060486254812L;
-	
+
 	@Id
 	@OneToOne
 	@JoinColumn(name = "questao_id")
@@ -26,6 +29,11 @@ public class OpcaoCorreta implements Serializable{
 	@OneToOne
 	@JoinColumn(name = "opcao_id", nullable = false)
 	Opcao opcao;
+
+	public OpcaoCorreta() {
+		this.opcao = new Opcao();
+		this.questao = new Questao();
+	}
 
 	public Questao getQuestao() {
 		return questao;
