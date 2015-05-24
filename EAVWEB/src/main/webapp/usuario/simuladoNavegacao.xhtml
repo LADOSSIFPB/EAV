@@ -1,105 +1,42 @@
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-<h:head>
-	<link href="../resources/dist/css/vendor/bootstrap.min.css"
-		rel="stylesheet" />
+	xmlns:p="http://primefaces.org/ui" template="/template/usuario.xhtml">
 
-	<link href="../resources/dist/css/flat-ui.css" rel="stylesheet" />
-
-	<title>EAV</title>
-</h:head>
-
-<h:body>
-
-	<style>
-body {
-	padding-top: 70px;
-	min-width: 650px;
-}
-
-table{
-border-spacing: 10px;
-border-collapse: separate;
-}
-</style>
-	<!-- Static navbar -->
-	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<ui:define name="section">
 		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-				</button>
-				<a class="navbar-brand" href="index.xhtml">EAV</a>
-			</div>
-			<div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Início</a></li>
-					<li><a href="#about">Perfil</a></li>
-				</ul>
-
-				<h:form role="search" class="navbar-form navbar-right">
-					<div class="form-group">
-						<input type="text" placeholder="Search" class="form-control" />
-					</div>
-
-					<button class="btn btn-inverse dropdown-toggle" type="button"
-						data-toggle="dropdown">
-						Opções<span class="fui-gear"></span>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-inverse" role="menu">
-						<li><a href="#">Opções da conta</a></li>
-						<li class="divider"></li>
-						<li><h:commandLink action="#{loginBean.logout()}" value="">Sair</h:commandLink></li>
-					</ul>
-				</h:form>
-			</div>
-			<!--/.nav-collapse -->
-		</div>
-	</div>
-
-	<div class="container">
-		<h:form>
-			<p:dataScroller value="#{simuladoNavegacaoBean.questoes}"
-				var="questao" chunkSize="10" rowIndexVar="numeroQuestao" styleClass="panel panel-default">
-				<f:facet name="header" class="panel-heading">
+			<h:form>
+				<p:dataScroller value="#{simuladoNavegacaoBean.questoes}"
+					var="questao" chunkSize="10" rowIndexVar="numeroQuestao"
+					styleClass="panel panel-default">
+					<f:facet name="header">
            			 Simulado Navegação Aerea
         		</f:facet>
 
-				<p:outputPanel>
-					<h:panelGrid columns="1">
+					<p:outputPanel>
+						<h:panelGrid columns="1">
 
-						<h:outputText for="questao" />
-						<h:outputText id="questao" value="Questão #{numeroQuestao+1}: #{questao.nomeQuestao}" />
+							<h:outputText for="questao" />
+							<h:outputText id="questao"
+								value="Questão #{numeroQuestao+1}: #{questao.nomeQuestao}" />
 
 
-						<h:selectOneRadio id="opcoes" value="#{questao.resposta}"
-							required="true" label="opcoes" layout="pageDirection">
-							<f:selectItems value="#{questao.opcoesSelectItem}" />
-						</h:selectOneRadio>
+							<h:selectOneRadio id="opcoes" value="#{questao.resposta}"
+								required="true" label="opcoes" layout="pageDirection">
+								<f:selectItems value="#{questao.opcoesSelectItem}" />
+							</h:selectOneRadio>
 
-					</h:panelGrid>
-				</p:outputPanel>
+						</h:panelGrid>
+					</p:outputPanel>
 
-				<hr />
+					<hr />
 
-			</p:dataScroller>
-			<h:commandButton action="#{simuladoNavegacaoBean.encerrarProva()}"
-				value="Finalizar prova" />
-		</h:form>
-	</div>
-
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="../resources/dist/js/vendor/jquery.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-
-	<script src="../resources/dist/js/flat-ui.min.js"></script>
-
-	<script src="../resources/docs/assets/js/application.js"></script>
-</h:body>
-</html>
+				</p:dataScroller>
+				<h:commandButton action="#{simuladoNavegacaoBean.encerrarProva()}"
+					value="Finalizar prova" />
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

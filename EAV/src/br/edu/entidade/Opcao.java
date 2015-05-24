@@ -29,6 +29,9 @@ public class Opcao {
 	@ManyToOne
 	@JoinColumn(name = "questao_id")
 	private Questao questao;
+	
+	@Transient
+	private String opcaoErrada;
 
 	@Transient
 	private boolean opcaoCorreta = false;
@@ -63,6 +66,14 @@ public class Opcao {
 
 	public void setQuestao(Questao questao) {
 		this.questao = questao;
+	}
+
+	public String getOpcaoErrada() {
+		return opcaoErrada;
+	}
+
+	public void setOpcaoErrada(String opcaoErrada) {
+		this.opcaoErrada = opcaoErrada;
 	}
 
 }

@@ -7,26 +7,20 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+	<meta charset="utf-8" />
+	<title>EAV</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<link href="../resources/dist/css/vendor/bootstrap.min.css"
 		rel="stylesheet" />
 
 	<link href="../resources/dist/css/flat-ui.css" rel="stylesheet" />
-
-	<!-- Encoding UTF-8 -->
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-	<!-- Título da página -->
-	<title><ui:insert name="pageTitle">
-                        #{msgs.qmanager}
-                </ui:insert></title>
 </h:head>
 <h:body>
 
 	<style>
 body {
 	padding-top: 70px;
-	min-width: 650px;
 }
 </style>
 
@@ -39,12 +33,11 @@ body {
 
 	<!-- Conteúdo -->
 	<div class="section">
-			<ui:insert name="section">
-			</ui:insert>
+		<ui:insert name="section">
+		</ui:insert>
 	</div>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="../resources/dist/js/vendor/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 
 	<script src="../resources/dist/js/flat-ui.min.js"></script>

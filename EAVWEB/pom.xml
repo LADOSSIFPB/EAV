@@ -27,7 +27,6 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-
 		<!-- Resteasy -->
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>

@@ -50,7 +50,7 @@ public class UsuarioDAO extends ServiceDAO implements GenericDAO<Usuario> {
 		return usuario;
 	}
 
-	public Usuario findByLogin(Usuario usuario) {
+	public Usuario findByLogin(Usuario usuario) throws EAVException {
 
 		ServiceDAO.iniciarConexao();
 
@@ -59,11 +59,8 @@ public class UsuarioDAO extends ServiceDAO implements GenericDAO<Usuario> {
 					.setParameter("email", usuario.getEmail())
 					.setParameter("senha", usuario.getSenha())
 					.getSingleResult();
-		} catch (IllegalArgumentException e) {
-			usuario = null;
-
 		} catch (NoResultException nre) {
-			usuario = null;
+			throw new EAVException(EAVException.USUARIO_INVALIDO);
 
 		} finally {
 			ServiceDAO.fecharConexao();

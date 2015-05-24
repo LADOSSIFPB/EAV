@@ -7,11 +7,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import br.edu.entidade.Assunto;
 import br.edu.entidade.Disciplina;
 import br.edu.entidade.OpcaoCorreta;
 import br.edu.entidade.Questao;
+import br.edu.entidade.QuestaoResultado;
 import br.edu.entidade.Usuario;
 
 
@@ -21,7 +23,7 @@ public interface EAVService {
 	@Path("/consulta/login")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Usuario login(Usuario usuario);
+	public Response login(Usuario usuario);
 	
 	@POST
 	@Path("/cadastro/usuario")
@@ -61,6 +63,6 @@ public interface EAVService {
 	@Path("/consulta/resultadoSimulado")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public int resultadoSimulado(List<OpcaoCorreta> opcaoCorretas);
+	public List<QuestaoResultado> resultadoSimulado(List<Questao> questoes);
 
 }

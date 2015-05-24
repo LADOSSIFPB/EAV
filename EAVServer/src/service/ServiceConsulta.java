@@ -1,5 +1,6 @@
 package service;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,13 +9,20 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+
+import org.apache.http.HttpStatus;
 
 import br.edu.entidade.Assunto;
 import br.edu.entidade.Disciplina;
 import br.edu.entidade.Opcao;
 import br.edu.entidade.OpcaoCorreta;
 import br.edu.entidade.Questao;
+import br.edu.entidade.QuestaoResultado;
 import br.edu.entidade.Usuario;
+import br.edu.util.EAVException;
+import br.edu.util.Erro;
 import entidadesDAO.AssuntoDAO;
 import entidadesDAO.DisciplinaDAO;
 import entidadesDAO.OpcaoCorretaDAO;
@@ -48,7 +56,7 @@ public class ServiceConsulta {
 
 		return disciplinas;
 	}
-	
+
 	@GET
 	@Path("/assuntosGetAll")
 	@Produces("application/json")
@@ -65,10 +73,36 @@ public class ServiceConsulta {
 	@Path("/login")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Usuario login(Usuario usuario) {
+	public Response login(Usuario usuario) throws EAVException {
 		UsuarioDAO dao = new UsuarioDAO();
-		usuario = dao.findByLogin(usuario);
-		return usuario;
+		
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+
+		try {
+
+			Usuario usuarioConsulta = dao.findByLogin(usuario);
+
+			if (usuarioConsulta != null) {
+
+				builder.status(HttpStatus.SC_ACCEPTED);
+				builder.entity(usuarioConsulta);
+
+			} else {
+
+				builder.status(HttpStatus.SC_UNAUTHORIZED);
+			}
+
+		} catch (EAVException eavException) {
+
+			Erro erro = new Erro();
+			erro.setCodigo(eavException.getCodigoErro());
+			erro.setMensagem(eavException.getMessage());
+
+			builder.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
 	}
 
 	@POST
@@ -124,24 +158,44 @@ public class ServiceConsulta {
 
 		return questoesRetorno;
 	}
-	
+
 	@POST
 	@Path("/resultadoSimulado")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public int resultadoSimulado(List<OpcaoCorreta> opcaoCorretas) {
+	public List<QuestaoResultado> resultadoSimulado(List<Questao> questoes) {
 
-		int acertos = 0;
-		
 		OpcaoCorretaDAO opcaoCorretaDAO = new OpcaoCorretaDAO();
+		OpcaoDAO opcaoDAO = new OpcaoDAO();
+		OpcaoCorreta opcaoCorreta;
 		
-		for (OpcaoCorreta opcaoCorreta : opcaoCorretas) {
-			if(opcaoCorretaDAO.findByResposta(opcaoCorreta))
-				acertos++;
+		List<QuestaoResultado> questoesResultado = new LinkedList<QuestaoResultado>();
+		QuestaoResultado questaoResultado;
+
+		for (Questao questao : questoes) {
+			opcaoCorreta = new OpcaoCorreta();
+			opcaoCorreta.getQuestao().setIdQuestao(questao.getIdQuestao());
+			opcaoCorreta.getOpcao().setIdOpcao(questao.getResposta());
+			
+			if (opcaoCorretaDAO.findByResposta(opcaoCorreta)){
+				questaoResultado = new QuestaoResultado();
+				questaoResultado.setNomeQuestao(questao.getNomeQuestao());
+				questaoResultado.setRespostaCorreta("Correto! R: " + opcaoDAO.findById((opcaoCorreta.getOpcao())).getNomeOpcao());
+				questaoResultado.setCorreta(true);
+				questoesResultado.add(questaoResultado);
+			} else{
+				questaoResultado = new QuestaoResultado();
+				questaoResultado.setNomeQuestao(questao.getNomeQuestao());
+				questaoResultado.setRespostaCorreta("Opção correta: " + (opcaoCorretaDAO.findById(questao)).getOpcao().getNomeOpcao());
+				questaoResultado.setRespostaErrada("Opção selecionada: " + opcaoDAO.findById((opcaoCorreta.getOpcao())).getNomeOpcao());
+				questoesResultado.add(questaoResultado);
+				
+			}
+			
 			
 		}
-		
-		return acertos;
+
+		return questoesResultado;
 	}
 
 }

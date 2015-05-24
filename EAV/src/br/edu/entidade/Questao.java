@@ -43,7 +43,7 @@ public class Questao {
 	
 	@Transient
 	private int resposta;
-
+	
 	public int getIdQuestao() {
 		return idQuestao;
 	}
@@ -91,5 +91,7 @@ public class Questao {
 	public void setResposta(int resposta) {
 		this.resposta = resposta;
 	}
+
+
 
 }

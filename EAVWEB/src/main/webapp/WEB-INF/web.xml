@@ -5,7 +5,7 @@
 	version="2.5">
 	<display-name>EAVWEB</display-name>
 	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>index.jsf</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -39,7 +39,7 @@
 
 	<!-- Remoção dos Temas do Primefaces -->
 	<context-param>
-		<param-name>primefaces.skin</param-name>
+		<param-name>primefaces.THEME</param-name>
 		<param-value>none</param-value>
 	</context-param>
 	

@@ -18,6 +18,10 @@ public class EAVException extends Exception {
 		this.codigoErro = codigoErro;
 	}
 
+	public EAVException() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@XmlElement
 	public int getCodigoErro() {
 		return codigoErro;
