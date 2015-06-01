@@ -16,13 +16,13 @@
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Início</a></li>
-					<li><a href="#about">Perfil</a></li>
+					<li class="active"><a href="index.jsf">Início</a></li>
+					<li><a href="perfil.xhtml">Perfil</a></li>
 				</ul>
 
 				<h:form role="search" class="navbar-form navbar-right">
 					<div class="form-group">
-						<input type="text" placeholder="Search" class="form-control" />
+						<h:outputText value="#{usuarioBean.usuario.nomeUsuario}" />
 					</div>
 
 					<button class="btn btn-inverse dropdown-toggle" type="button"

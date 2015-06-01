@@ -34,9 +34,13 @@
 					<hr />
 
 				</p:dataScroller>
-				<h:commandButton action="#{simuladoNavegacaoBean.encerrarProva()}"
-					value="Finalizar prova" />
+				<div id="submeter" style="padding: 2%;">
+					<h:commandButton action="#{simuladoNavegacaoBean.encerrarProva()}"
+						value="Finalizar prova"/>
+				</div>
 			</h:form>
 		</div>
+		<link href="../resources/css/style.css" rel="stylesheet" />
+		<script src="../resources/dist/js/vendor/jquery.min.js"></script>
 	</ui:define>
 </ui:composition>

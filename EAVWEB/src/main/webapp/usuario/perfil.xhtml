@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/usuario.xhtml">
+
+	<ui:define name="section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12">
+					<div class="tile teste3">
+						<h:graphicImage class="img-thumbnail"
+							value="/fileuser/#{usuarioBean.usuario.cpf}.png"
+							style="height:200px;" />
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Informações do usuário</h3>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-1">
+									<h:outputLabel for="nome" value="Nome:" />
+								</div>
+								<div class="col-lg-11">
+									<h:outputText id="nome"
+										value="#{usuarioBean.usuario.nomeUsuario}" />
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-1">
+									<h:outputLabel for="cpf" value="CPF:" />
+								</div>
+								<div class="col-lg-11">
+									<h:outputText id="cpf" value="#{usuarioBean.usuario.cpf}" />
+								</div>
+							</div>
+							<div class="row">
+
+								<div class="col-lg-1">
+									<h:outputLabel for="email" value="E-mail:" />
+								</div>
+								<div class="col-lg-11">
+									<h:outputText id="email" value="#{usuarioBean.usuario.email}" />
+								</div>
+							</div>
+
+							<div class="row">
+
+								<div class="col-lg-10"></div>
+								<div class="col-lg-2">
+									<p:link class="btn btn-block btn-lg btn-primary"
+										outcome="trocarsenha" value="Trocar senha">
+									</p:link>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<link href="../resources/css/style.css" rel="stylesheet" />
+		<script src="../resources/dist/js/vendor/jquery.min.js"></script>
+	</ui:define>
+</ui:composition>

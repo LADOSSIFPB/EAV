@@ -41,10 +41,9 @@ public class LoginBean implements Serializable {
 	}
 
 	public void fazerLogin() {
-
-		String pageredirect = null;
-
-		Response response = service.login(this.usuario);
+		
+		System.out.println();
+		Response response = service.login(usuario);
 
 		int status = response.getStatus();
 
@@ -75,8 +74,20 @@ public class LoginBean implements Serializable {
 	}
 
 	public void singup() {
-		service.cadastrarUsuario(this.usuario);
-		GenericBean.sendRedirect(PathRedirect.paginaInicial);
+		Response response = service.cadastrarUsuario(this.usuario);
+		
+		int status = response.getStatus();
+
+		if (status == HttpStatus.SC_ACCEPTED) {
+
+			GenericBean.sendRedirect(PathRedirect.paginaInicial);
+		} else {
+			Erro erro = response.readEntity(Erro.class);
+
+			GenericBean.setMessage(erro.getMensagem(),
+					FacesMessage.SEVERITY_ERROR);
+		}
+		
 	}
 
 	public Usuario getUsuario() {

@@ -73,7 +73,7 @@ public class ServiceConsulta {
 	@Path("/login")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response login(Usuario usuario) throws EAVException {
+	public Response login(Usuario usuario){
 		UsuarioDAO dao = new UsuarioDAO();
 		
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);

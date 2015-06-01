@@ -17,6 +17,7 @@ public class SimuladorAnacService extends Application {
 		// ADD YOUR RESTFUL RESOURCES HERE
 		this.singletons.add(new ServiceCadastro());
 		this.singletons.add(new ServiceConsulta());
+		this.singletons.add(new ServiceUpdate());
 	}
 
 	public Set<Class<?>> getClasses() {

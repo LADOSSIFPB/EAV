@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 
 import br.edu.entidade.Assunto;
 import br.edu.entidade.Disciplina;
-import br.edu.entidade.OpcaoCorreta;
+import br.edu.entidade.NovaSenha;
 import br.edu.entidade.Questao;
 import br.edu.entidade.QuestaoResultado;
 import br.edu.entidade.Usuario;
@@ -29,7 +29,7 @@ public interface EAVService {
 	@Path("/cadastro/usuario")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Usuario cadastrarUsuario(Usuario usuario);
+	public Response cadastrarUsuario(Usuario usuario);
 	
 	@POST
 	@Path("/cadastro/questao")
@@ -64,5 +64,11 @@ public interface EAVService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public List<QuestaoResultado> resultadoSimulado(List<Questao> questoes);
+	
+	@POST
+	@Path("/update/senha")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response alterarSenha(NovaSenha novaSenha);
 
 }

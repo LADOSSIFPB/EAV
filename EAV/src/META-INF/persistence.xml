@@ -6,7 +6,7 @@
 
 		<!-- provedor/implementacao do JPA -->
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		
+
 		<!-- entidade mapeada -->
 		<class>br.edu.entidade.Assunto</class>
 		<class>br.edu.entidade.Disciplina</class>
@@ -14,6 +14,7 @@
 		<class>br.edu.entidade.OpcaoCorreta</class>
 		<class>br.edu.entidade.Questao</class>
 		<class>br.edu.entidade.Usuario</class>
+
 
 		<properties>
 			<!-- dados da conexao -->

@@ -6,7 +6,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import br.edu.util.StringUtil;
 
 @Entity
 @NamedQueries({
@@ -25,12 +28,13 @@ public class Usuario {
 	private String nomeUsuario;
 	@Column(name="nm_email", nullable = false, unique = true, length = 50)
 	private String email;
-	@Column(name = "nm_senha", nullable = false, length = 50)
+	@Column(name = "nm_senha", nullable = false, length = 255)
 	private String senha;
 	
 	public Usuario() {
 	}
-
+	
+	@XmlElement
 	public String getNomeUsuario() {
 		return nomeUsuario;
 	}
@@ -38,23 +42,26 @@ public class Usuario {
 	public void setNomeUsuario(String nomeUsuario) {
 		this.nomeUsuario = nomeUsuario;
 	}
-
+	
+	@XmlElement
 	public String getCpf() {
 		return cpf;
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		this.cpf = StringUtil.tirarMascaraCPF(cpf);
 	}
-
+	
+	@XmlElement
 	public String getSenha() {
 		return senha;
 	}
-
+	
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
+	
+	@XmlElement
 	public String getEmail() {
 		return email;
 	}

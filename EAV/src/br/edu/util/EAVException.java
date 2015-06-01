@@ -43,6 +43,9 @@ public class EAVException extends Exception {
 	public static final int ASSUNTO_INVALIDO = 3;
 	public static final int QUESTAO_INVALIDA = 4;
 	public static final int OPCAO_INVALIDA = 5;
+	public static final int USUARIO_EXISTENTE = 6;
+	public static final int SENHA_INCORRETA = 7;
+	public static final int ERRO_CRIPITOGRAFAR = 100;
 	
 	
 	// MAPA DE ERROS
@@ -54,6 +57,9 @@ public class EAVException extends Exception {
 		erros.put(ASSUNTO_INVALIDO, "Assunto inválido!");
 		erros.put(QUESTAO_INVALIDA, "Questão inválida!");
 		erros.put(OPCAO_INVALIDA, "Opção inválida!");
+		erros.put(USUARIO_EXISTENTE, "O usuário já existe!");
+		erros.put(SENHA_INCORRETA, "Senha incorreta!");
+		erros.put(ERRO_CRIPITOGRAFAR, "Erro durante a criptografia!");
 	}
 
 }
