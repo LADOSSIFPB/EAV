@@ -13,13 +13,13 @@
 				<h:outputLabel for="assuntos"
 					value="Selecione os assuntos do simulado: ">
 					<h:selectManyCheckbox id="assuntos"
-						value="#{conteudoNavegacaoBean.idAssuntos}" required="true"
+						value="#{selecionarAssuntosBean.idAssuntos}" required="true"
 						label="assuntos" layout="pageDirection">
-						<f:selectItems value="#{conteudoNavegacaoBean.assuntosSelect}" />
+						<f:selectItems value="#{selecionarAssuntosBean.assuntosSelect}" />
 					</h:selectManyCheckbox>
 
 					<h:commandButton
-						actionListener="#{conteudoNavegacaoBean.iniciarSimulado()}"
+						actionListener="#{selecionarAssuntosBean.iniciarSimulado()}"
 						value="Iniciar simulado" />
 				</h:outputLabel>
 			</h:form>

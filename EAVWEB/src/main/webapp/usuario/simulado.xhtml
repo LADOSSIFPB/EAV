@@ -8,11 +8,11 @@
 	<ui:define name="section">
 		<div class="container">
 			<h:form>
-				<p:dataScroller value="#{simuladoNavegacaoBean.questoes}"
+				<p:dataScroller value="#{simuladoBean.questoes}"
 					var="questao" chunkSize="10" rowIndexVar="numeroQuestao"
 					styleClass="panel panel-default">
 					<f:facet name="header">
-           			 Simulado Navegação Aerea
+           			 Simulado #{simuladoBean.nomeDisciplina}
         		</f:facet>
 
 					<p:outputPanel>
@@ -35,7 +35,7 @@
 
 				</p:dataScroller>
 				<div id="submeter" style="padding: 2%;">
-					<h:commandButton action="#{simuladoNavegacaoBean.encerrarProva()}"
+					<h:commandButton actionListener="#{simuladoBean.encerrarProva()}"
 						value="Finalizar prova"/>
 				</div>
 			</h:form>

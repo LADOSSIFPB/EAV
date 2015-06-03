@@ -5,38 +5,39 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.management.Query;
 
 import org.primefaces.model.chart.PieChartModel;
 
 import service.EAVService;
 import service.ProviderServiceFactory;
-import br.edu.entidade.OpcaoCorreta;
 import br.edu.entidade.Questao;
 import br.edu.entidade.QuestaoResultado;
 
 @ManagedBean
 @SessionScoped
-public class SimuladoNavegacaoBean {
+public class SimuladoBean {
 
 	private EAVService service = ProviderServiceFactory
 			.createServiceClient(EAVService.class);
 
 	private PieChartModel pieChartModel;
 	private float resultado;
-
+	
 	private int numeroQuestao = 0;
 
 	private List<Questao> questoes;
+	
+	private String nomeDisciplina;
 
 	private List<QuestaoResultado> questoesResultados;
 
-	public SimuladoNavegacaoBean() {
+	public SimuladoBean() {
 		questoes = new LinkedList<Questao>();
 	}
 
-	public SimuladoNavegacaoBean(List<Questao> questoes) {
+	public SimuladoBean(List<Questao> questoes, String nomeDisciplina) {
 		this.questoes = questoes;
+		this.nomeDisciplina = nomeDisciplina;
 	}
 
 	public List<Questao> getQuestoes() {
@@ -118,6 +119,14 @@ public class SimuladoNavegacaoBean {
 	
 	public void setPieChartModel(String legend, int value) {
 		pieChartModel.set(legend, value);
+	}
+
+	public String getNomeDisciplina() {
+		return nomeDisciplina;
+	}
+
+	public void setNomeDisciplina(String nomeDisciplina) {
+		this.nomeDisciplina = nomeDisciplina;
 	}
 
 }

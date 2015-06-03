@@ -16,7 +16,7 @@
 							<div class="col-xs-12 col-md-8">
 								<h3>
 									Nota:
-									<h:outputText value="#{simuladoNavegacaoBean.resultado}">
+									<h:outputText value="#{simuladoBean.resultado}">
 										<f:convertNumber groupingUsed="true" maxFractionDigits="2" />
 									</h:outputText>
 								</h3>
@@ -24,12 +24,12 @@
 							<div class="col-xs-12 col-md-4">
 
 								<p:chart type="pie"
-									model="#{simuladoNavegacaoBean.pieChartModel}" />
+									model="#{simuladoBean.pieChartModel}" />
 							</div>
 						</div>
 					</div>
 				</div>
-				<p:dataScroller value="#{simuladoNavegacaoBean.questoesResultados}"
+				<p:dataScroller value="#{simuladoBean.questoesResultados}"
 					var="questaoResultado" chunkSize="10"
 					styleClass="panel panel-default">
 					<f:facet name="header">

@@ -4,87 +4,99 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui" template="/template/usuario.xhtml">
-	
+
 	<ui:define name="section">
+		<h:form>
 
-		<div class="container">
+			<div class="container">
 
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="row">
-						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
-							<div class="tile">
-								<h:graphicImage value="/resources/img/icons/png/compass.png"
-									alt="navegacao aerea" class="tile-image big-illustration" />
-								<h3 class="tile-title">Navegação Aerea</h3>
-								<p>100% convertable to HTML/CSS layout.</p>
-								<h:link class="btn btn-primary btn-large btn-block"
-									outcome="selecionarconteudonavegacao" value="Iniciar">
-								</h:link>
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+								<div class="tile">
+									<h:graphicImage value="/resources/img/icons/png/compass2.png"
+										alt="navegacao aerea" class="tile-image big-illustration" />
+									<h3 class="tile-title">Navegação Aerea</h3>
+									<p>100% convertable to HTML/CSS layout.</p>
+									<h:commandLink class="btn btn-primary btn-large btn-block"
+										action="#{selecionarAssuntosBean.buscarAssuntos(1)}"
+										value="Iniciar">
+									</h:commandLink>
+								</div>
 							</div>
-						</div>
 
-						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
-							<div class="tile">
-								<h:graphicImage value="/resources/img/icons/png/plane.png"
-									alt="teoria de voo" class="tile-image big-illustration" />
-								<h3 class="tile-title">Teoria de Voo</h3>
-								<p>100% convertable to HTML/CSS layout.</p>
-								<a class="btn btn-primary btn-large btn-block"
-									href="http://designmodo.com/flat">Iniciar</a>
+							<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+								<div class="tile">
+									<h:graphicImage value="/resources/img/icons/png/plane.png"
+										alt="teoria de voo" class="tile-image big-illustration" />
+									<h3 class="tile-title">Teoria de Voo</h3>
+									<p>100% convertable to HTML/CSS layout.</p>
+									<h:commandLink class="btn btn-primary btn-large btn-block"
+										action="#{selecionarAssuntosBean.buscarAssuntos(2)}"
+										value="Iniciar">
+									</h:commandLink>
+								</div>
 							</div>
-						</div>
 
-						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
-							<div class="tile">
-								<h:graphicImage value="/resources/img/icons/png/sun.png"
-									alt="meteorologia" class="tile-image big-illustration" />
-								<h3 class="tile-title">Meteorologia</h3>
-								<p>100% convertable to HTML/CSS layout.</p>
-								<a class="btn btn-primary btn-large btn-block"
-									href="http://designmodo.com/flat">Iniciar</a>
+							<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+								<div class="tile">
+									<h:graphicImage value="/resources/img/icons/png/sun2.png"
+										alt="meteorologia" class="tile-image big-illustration" />
+									<h3 class="tile-title">Meteorologia</h3>
+									<p>100% convertable to HTML/CSS layout.</p>
+									<h:commandLink class="btn btn-primary btn-large btn-block"
+										action="#{selecionarAssuntosBean.buscarAssuntos(3)}"
+										value="Iniciar">
+									</h:commandLink>
+								</div>
 							</div>
-						</div>
 
-						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
-							<div class="tile">
-								<h:graphicImage value="/resources/img/icons/png/Peca.png"
-									alt="conhecimentos técnicos"
-									class="tile-image big-illustration" />
-								<h3 class="tile-title">Conhecimentos técnicos</h3>
-								<p>100% convertable to HTML/CSS layout.</p>
-								<a class="btn btn-primary btn-large btn-block"
-									href="http://designmodo.com/flat">Iniciar</a>
+							<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+								<div class="tile">
+									<h:graphicImage value="/resources/img/icons/png/Peca2.png"
+										alt="conhecimentos técnicos"
+										class="tile-image big-illustration" />
+									<h3 class="tile-title">Conhecimentos técnicos</h3>
+									<p>100% convertable to HTML/CSS layout.</p>
+									<h:commandLink class="btn btn-primary btn-large btn-block"
+										action="#{selecionarAssuntosBean.buscarAssuntos(4)}"
+										value="Iniciar">
+									</h:commandLink>
+								</div>
 							</div>
-						</div>
 
-						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
-							<div class="tile">
-								<h:graphicImage value="/resources/img/icons/png/tower.png"
-									alt="regulamento de trafego"
-									class="tile-image big-illustration" />
-								<h3 class="tile-title">Regulamento de tráfego aereo</h3>
-								<p>100% convertable to HTML/CSS layout.</p>
-								<a class="btn btn-primary btn-large btn-block"
-									href="http://designmodo.com/flat">Iniciar</a>
+							<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+								<div class="tile">
+									<h:graphicImage value="/resources/img/icons/png/tower2.png"
+										alt="regulamento de trafego"
+										class="tile-image big-illustration" />
+									<h3 class="tile-title">Regulamento de tráfego aereo</h3>
+									<p>100% convertable to HTML/CSS layout.</p>
+									<h:commandLink class="btn btn-primary btn-large btn-block"
+										action="#{selecionarAssuntosBean.buscarAssuntos(5)}"
+										value="Iniciar">
+									</h:commandLink>
+								</div>
 							</div>
-						</div>
 
-						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
-							<div class="tile">
-								<h:graphicImage value="/resources/img/icons/png/Clipboard.png"
-									alt="Compas" class="tile-image big-illustration" />
+							<div class="col-xs-12 col-sm-4 col-md-3 col-lg-4">
+								<div class="tile">
+									<h:graphicImage value="/resources/img/icons/png/Clipboard.png"
+										alt="Compas" class="tile-image big-illustration" />
 
-								<h3 class="tile-title">Simular prova completa</h3>
-								<p>100% convertable to HTML/CSS layout.</p>
-								<a class="btn btn-primary btn-large btn-block"
-									href="http://designmodo.com/flat">Iniciar</a>
+									<h3 class="tile-title">Simular prova completa</h3>
+									<p>100% convertable to HTML/CSS layout.</p>
+									<a class="btn btn-primary btn-large btn-block"
+										href="http://designmodo.com/flat">Iniciar</a>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</h:form>
 		<script src="../resources/dist/js/vendor/jquery.min.js"></script>
 	</ui:define>
 </ui:composition>
