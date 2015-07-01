@@ -11,9 +11,10 @@ import javax.ws.rs.core.Response;
 
 import br.edu.entidade.Assunto;
 import br.edu.entidade.Disciplina;
+import br.edu.entidade.Historico;
 import br.edu.entidade.NovaSenha;
 import br.edu.entidade.Questao;
-import br.edu.entidade.QuestaoResultado;
+import br.edu.entidade.Resultado;
 import br.edu.entidade.Usuario;
 
 
@@ -63,12 +64,23 @@ public interface EAVService {
 	@Path("/consulta/resultadoSimulado")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<QuestaoResultado> resultadoSimulado(List<Questao> questoes);
+	public Resultado resultadoSimulado(List<Questao> questoes);
+	
+	@POST
+	@Path("/consulta/historico")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Historico> buscarHistorico(Usuario usuario);
 	
 	@POST
 	@Path("/update/senha")
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response alterarSenha(NovaSenha novaSenha);
-
+	
+	@POST
+	@Path("/cadastro/historico")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarHistorico(Historico historico); 
 }

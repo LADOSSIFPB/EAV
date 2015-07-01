@@ -13,6 +13,7 @@ import org.apache.http.HttpStatus;
 
 import br.edu.entidade.Assunto;
 import br.edu.entidade.Disciplina;
+import br.edu.entidade.Historico;
 import br.edu.entidade.Opcao;
 import br.edu.entidade.OpcaoCorreta;
 import br.edu.entidade.Questao;
@@ -22,6 +23,7 @@ import br.edu.util.Erro;
 import br.edu.util.StringUtil;
 import entidadesDAO.AssuntoDAO;
 import entidadesDAO.DisciplinaDAO;
+import entidadesDAO.HistoricoDAO;
 import entidadesDAO.OpcaoCorretaDAO;
 import entidadesDAO.OpcaoDAO;
 import entidadesDAO.QuestaoDAO;
@@ -38,23 +40,23 @@ public class ServiceCadastro {
 	@Produces("application/json")
 	public Response cadastrarUsuario(Usuario usuario) {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		
+
 		String cpfSemMascara = StringUtil.tirarMascaraCPF(usuario.getCpf());
 		usuario.setCpf(cpfSemMascara);
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
-			
+
 		Usuario usuarioConsulta;
-		
+
 		try {
 			usuarioConsulta = usuarioDAO.create(usuario);
 			if (usuarioConsulta != null) {
-				
+
 				builder.status(HttpStatus.SC_ACCEPTED);
 				builder.entity(usuarioConsulta);
-				
+
 			} else {
-				
+
 				builder.status(HttpStatus.SC_UNAUTHORIZED);
 			}
 		} catch (EAVException eavException) {
@@ -64,7 +66,6 @@ public class ServiceCadastro {
 
 			builder.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(erro);
 		}
-		
 
 		return builder.build();
 	}
@@ -121,6 +122,42 @@ public class ServiceCadastro {
 		}
 
 		return questao;
+	}
+
+	@POST
+	@Path("/historico")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public Response cadastrarHistorico(Historico historico) {
+
+		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
+		builder.expires(new Date());
+		
+		historico.setDataSimulado(new Date());
+
+		HistoricoDAO historicoDAO = new HistoricoDAO();
+
+		try {
+			historico = historicoDAO.create(historico);
+			if (historico != null) {
+
+				builder.status(HttpStatus.SC_ACCEPTED);
+				builder.entity(historico);
+
+			} else {
+
+				builder.status(HttpStatus.SC_UNAUTHORIZED);
+			}
+		} catch (EAVException eavException) {
+			Erro erro = new Erro();
+			erro.setCodigo(eavException.getCodigoErro());
+			erro.setMensagem(eavException.getMessage());
+
+			builder.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).entity(erro);
+		}
+
+		return builder.build();
+
 	}
 
 }

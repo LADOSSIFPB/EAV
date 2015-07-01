@@ -14,6 +14,7 @@
 		<class>br.edu.entidade.OpcaoCorreta</class>
 		<class>br.edu.entidade.Questao</class>
 		<class>br.edu.entidade.Usuario</class>
+		<class>br.edu.entidade.Historico</class>
 
 
 		<properties>

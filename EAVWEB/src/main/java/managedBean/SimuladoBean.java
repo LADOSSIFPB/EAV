@@ -10,8 +10,10 @@ import org.primefaces.model.chart.PieChartModel;
 
 import service.EAVService;
 import service.ProviderServiceFactory;
+import br.edu.entidade.Assunto;
+import br.edu.entidade.Historico;
 import br.edu.entidade.Questao;
-import br.edu.entidade.QuestaoResultado;
+import br.edu.entidade.Resultado;
 
 @ManagedBean
 @SessionScoped
@@ -21,23 +23,26 @@ public class SimuladoBean {
 			.createServiceClient(EAVService.class);
 
 	private PieChartModel pieChartModel;
-	private float resultado;
-	
+
 	private int numeroQuestao = 0;
 
 	private List<Questao> questoes;
-	
+	private List<Assunto> assuntos;
+
 	private String nomeDisciplina;
 
-	private List<QuestaoResultado> questoesResultados;
+	private Resultado resultado;
 
 	public SimuladoBean() {
 		questoes = new LinkedList<Questao>();
+		setResultado(new Resultado());
+		assuntos = new LinkedList<Assunto>();
 	}
 
-	public SimuladoBean(List<Questao> questoes, String nomeDisciplina) {
+	public SimuladoBean(List<Questao> questoes, String nomeDisciplina, List<Assunto> assuntos) {
 		this.questoes = questoes;
 		this.nomeDisciplina = nomeDisciplina;
+		this.assuntos = assuntos;
 	}
 
 	public List<Questao> getQuestoes() {
@@ -46,40 +51,29 @@ public class SimuladoBean {
 
 	public void encerrarProva() {
 
-		this.setQuestoesResultados(service.resultadoSimulado(questoes));
+		setResultado(service.resultadoSimulado(questoes));
 		createPieModel1();
-		
-		int corretas = 0;
-		int erradas = 0;
-		
-		for (QuestaoResultado questaoResultado : questoesResultados) {
-			if(questaoResultado.isCorreta()){
-				corretas++;
-			}else{
-				erradas++;
-			}
-		}
-		
-		setPieChartModel("Acertos", corretas);
-		setPieChartModel("Erros", erradas);
-		
-		resultado = (float) (10.0 / questoesResultados.size());
-		resultado = resultado * corretas;
 
+		setPieChartModel("Acertos", getResultado().getQuestoesCorretas());
+		setPieChartModel("Erros", getResultado().getQuestoesErradas());
+
+		UsuarioBean usuarioBean = (UsuarioBean) GenericBean
+				.getSessionValue("usuarioBean");
+		Historico historico = new Historico();
+
+		historico.setNotaSimulado(getResultado().getNota());
+		historico.setDisciplina(questoes.get(1).getAssunto().getDisciplina());
+		historico.setAssuntos(assuntos);
+		historico.setUsuario(usuarioBean.getUsuario());
+		
+		service.cadastrarHistorico(historico);
+		
 		GenericBean.sendRedirect("resultado.xhtml");
 
 	}
 
 	public void setQuestoes(List<Questao> questoes) {
 		this.questoes = questoes;
-	}
-
-	public float getResultado() {
-		return resultado;
-	}
-
-	public void setResultado(float resultado) {
-		this.resultado = resultado;
 	}
 
 	public int getNumeroQuestao() {
@@ -90,23 +84,15 @@ public class SimuladoBean {
 		this.numeroQuestao = numeroQuestao;
 	}
 
-	public List<QuestaoResultado> getQuestoesResultados() {
-		return questoesResultados;
-	}
-
-	public void setQuestoesResultados(List<QuestaoResultado> questoesResultados) {
-		this.questoesResultados = questoesResultados;
-	}
-
 	private void createPieModel1() {
 		pieChartModel = new PieChartModel();
 
 		pieChartModel.setShowDataLabels(true);
 		pieChartModel.setMouseoverHighlight(true);
-		
+
 		pieChartModel.setTitle("Resultado");
 		pieChartModel.setLegendPosition("w");
-		
+
 	}
 
 	public PieChartModel getPieChartModel() {
@@ -116,7 +102,7 @@ public class SimuladoBean {
 	public void setPieChartModel(PieChartModel pieChartModel) {
 		this.pieChartModel = pieChartModel;
 	}
-	
+
 	public void setPieChartModel(String legend, int value) {
 		pieChartModel.set(legend, value);
 	}
@@ -127,6 +113,14 @@ public class SimuladoBean {
 
 	public void setNomeDisciplina(String nomeDisciplina) {
 		this.nomeDisciplina = nomeDisciplina;
+	}
+
+	public Resultado getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(Resultado resultado) {
+		this.resultado = resultado;
 	}
 
 }

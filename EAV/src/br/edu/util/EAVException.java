@@ -46,6 +46,7 @@ public class EAVException extends Exception {
 	public static final int USUARIO_EXISTENTE = 6;
 	public static final int SENHA_INCORRETA = 7;
 	public static final int ERRO_CRIPITOGRAFAR = 100;
+	public static final int FALHA_CADASTRO_HISTORICO = 101;
 	
 	
 	// MAPA DE ERROS
@@ -60,6 +61,7 @@ public class EAVException extends Exception {
 		erros.put(USUARIO_EXISTENTE, "O usuário já existe!");
 		erros.put(SENHA_INCORRETA, "Senha incorreta!");
 		erros.put(ERRO_CRIPITOGRAFAR, "Erro durante a criptografia!");
+		erros.put(FALHA_CADASTRO_HISTORICO, "Erro durante o cadastro do histórico!");
 	}
 
 }

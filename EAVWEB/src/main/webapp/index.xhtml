@@ -12,7 +12,7 @@ var devices = new Array('nokia','iphone','blackberry','sony','lg',
 'htc_tattoo','samsung','symbian','SymbianOS','elaine','palm',
 'series60','windows ce','android','obigo','netfront',
 'openwave','mobilexplorer','operamini');
-var url_redirect = 'http://192.168.52.114:8080/EAVWEB/m.index.xhtml';
+var url_redirect = 'http://192.168.0.102:8080/EAVWEB/m.index.xhtml';
 function mobiDetect(userAgent, devices) {
 for(var i = 0; i &lt; devices.length; i++) {
 if (userAgent.search(devices[i]) > 0) {
@@ -37,10 +37,6 @@ window.location.href = url_redirect;
 	<link href="resources/css/sticky-footer.css" rel="stylesheet" />
 
 	<style>
-html {
-	height: 100%;
-}
-
 body {
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -61,8 +57,22 @@ body {
 				<div class="row">
 					<div class="col-xs-12 col-md-8">
 
-						<h:graphicImage value="/resources/img/Untitled.gif"
-							style="width: 80%;" />
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12">
+								<div class="text-center teste3">
+									<h:graphicImage value="/resources/img/icons/png/plane.png"
+										title="EAV" class="tile-image big-illustration" width="200" />
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-md-12">
+								<h1 class="teste text-center">EAV</h1>
+							</div>
+							<div class="col-xs-12 col-md-12">
+								<p class="text-center teste2">Escola Aeronaútica Virtual</p>
+							</div>
+						</div>
 
 					</div>
 					<div class="col-xs-12 col-md-4">
@@ -98,7 +108,7 @@ body {
 	<!-- /container -->
 
 	<footer class="footer">
-		<div class="container" style="height: 80%;">
+		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="row">

@@ -42,25 +42,25 @@ public class SelecionarAssuntosBean implements Serializable {
 
 	public String buscarAssuntos(String tipoDisciplina) {
 
+		assuntosSelect = new LinkedList<SelectItem>();
+
 		int idDisciplina = Integer.parseInt(tipoDisciplina);
 
-		if (idDisciplina == TiposDisciplinas.navegacaoAerea) {
-			disciplina.setIdDisciplina(idDisciplina);
-			List<Assunto> assuntosConsulta = service
-					.assuntoGetByDisciplina(disciplina);
+		disciplina.setIdDisciplina(idDisciplina);
+		List<Assunto> assuntosConsulta = service
+				.assuntoGetByDisciplina(disciplina);
 
-			this.idAssuntos = new int[assuntosConsulta.size()];
+		this.idAssuntos = new int[assuntosConsulta.size()];
 
-			if (!assuntosConsulta.isEmpty()) {
+		if (!assuntosConsulta.isEmpty()) {
 
-				for (Assunto assunto : assuntosConsulta) {
+			for (Assunto assunto : assuntosConsulta) {
 
-					SelectItem selectItem = new SelectItem();
-					selectItem.setValue(assunto.getIdAssunto());
-					selectItem.setLabel(assunto.getNomeAssunto());
+				SelectItem selectItem = new SelectItem();
+				selectItem.setValue(assunto.getIdAssunto());
+				selectItem.setLabel(assunto.getNomeAssunto());
 
-					this.assuntosSelect.add(selectItem);
-				}
+				this.assuntosSelect.add(selectItem);
 			}
 		}
 
@@ -89,10 +89,12 @@ public class SelecionarAssuntosBean implements Serializable {
 			questoes.add(questao);
 		}
 
+		String nomeDisciplina = TiposDisciplinas.recuperarDisciplina(disciplina
+				.getIdDisciplina());
+
 		GenericBean.resetSessionScopedBean("simuladoBean");
 		SimuladoBean simuladoNavegacaoBean = new SimuladoBean(questoes,
-				TiposDisciplinas.recuperarDisciplina(disciplina
-						.getIdDisciplina()));
+				nomeDisciplina, assuntos);
 		GenericBean.setSessionValue("simuladoBean", simuladoNavegacaoBean);
 
 		GenericBean.resetSessionScopedBean("selecionarAssuntosBean");

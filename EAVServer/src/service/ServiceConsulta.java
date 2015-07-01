@@ -1,5 +1,6 @@
 package service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,15 +17,18 @@ import org.apache.http.HttpStatus;
 
 import br.edu.entidade.Assunto;
 import br.edu.entidade.Disciplina;
+import br.edu.entidade.Historico;
 import br.edu.entidade.Opcao;
 import br.edu.entidade.OpcaoCorreta;
 import br.edu.entidade.Questao;
 import br.edu.entidade.QuestaoResultado;
+import br.edu.entidade.Resultado;
 import br.edu.entidade.Usuario;
 import br.edu.util.EAVException;
 import br.edu.util.Erro;
 import entidadesDAO.AssuntoDAO;
 import entidadesDAO.DisciplinaDAO;
+import entidadesDAO.HistoricoDAO;
 import entidadesDAO.OpcaoCorretaDAO;
 import entidadesDAO.OpcaoDAO;
 import entidadesDAO.QuestaoDAO;
@@ -73,9 +77,9 @@ public class ServiceConsulta {
 	@Path("/login")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response login(Usuario usuario){
+	public Response login(Usuario usuario) {
 		UsuarioDAO dao = new UsuarioDAO();
-		
+
 		ResponseBuilder builder = Response.status(Response.Status.BAD_REQUEST);
 		builder.expires(new Date());
 
@@ -140,9 +144,15 @@ public class ServiceConsulta {
 			assuntoConsulta = assuntoDAO.findById(assuntoConsulta);
 			questoes.addAll(questaoDAO.findByAssunto(assuntoConsulta));
 
+			Collections.shuffle(questoes);
+
 			for (Questao questaoConsulta : questoes) {
+				
 				questaoConsulta.setOpcoes(opcaoDAO
 						.findByQuestao(questaoConsulta));
+
+				Collections.shuffle(questaoConsulta.getOpcoes());
+
 				opcaoCorreta = opcaoCorretaDAO.findById(questaoConsulta);
 
 				for (Opcao opcaoVerificacao : questaoConsulta.getOpcoes()) {
@@ -163,39 +173,86 @@ public class ServiceConsulta {
 	@Path("/resultadoSimulado")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public List<QuestaoResultado> resultadoSimulado(List<Questao> questoes) {
+	public Resultado resultadoSimulado(List<Questao> questoes) {
+
+		Resultado resultado = new Resultado();
+		float notaSimulado = 0;
+		int questoesCorretas = 0;
+		int questoesErradas = 0;
 
 		OpcaoCorretaDAO opcaoCorretaDAO = new OpcaoCorretaDAO();
 		OpcaoDAO opcaoDAO = new OpcaoDAO();
 		OpcaoCorreta opcaoCorreta;
-		
+
 		List<QuestaoResultado> questoesResultado = new LinkedList<QuestaoResultado>();
 		QuestaoResultado questaoResultado;
 
 		for (Questao questao : questoes) {
+			
 			opcaoCorreta = new OpcaoCorreta();
 			opcaoCorreta.getQuestao().setIdQuestao(questao.getIdQuestao());
 			opcaoCorreta.getOpcao().setIdOpcao(questao.getResposta());
-			
-			if (opcaoCorretaDAO.findByResposta(opcaoCorreta)){
+
+			if (opcaoCorretaDAO.findByResposta(opcaoCorreta)) {
 				questaoResultado = new QuestaoResultado();
 				questaoResultado.setNomeQuestao(questao.getNomeQuestao());
-				questaoResultado.setRespostaCorreta("Correto! R: " + opcaoDAO.findById((opcaoCorreta.getOpcao())).getNomeOpcao());
+				questaoResultado.setRespostaCorreta("Correto! R: "
+						+ opcaoDAO.findById((opcaoCorreta.getOpcao()))
+								.getNomeOpcao());
 				questaoResultado.setCorreta(true);
 				questoesResultado.add(questaoResultado);
-			} else{
+				questoesCorretas++;
+			} else {
 				questaoResultado = new QuestaoResultado();
 				questaoResultado.setNomeQuestao(questao.getNomeQuestao());
-				questaoResultado.setRespostaCorreta("Opção correta: " + (opcaoCorretaDAO.findById(questao)).getOpcao().getNomeOpcao());
-				questaoResultado.setRespostaErrada("Opção selecionada: " + opcaoDAO.findById((opcaoCorreta.getOpcao())).getNomeOpcao());
+				questaoResultado.setRespostaCorreta("Opção correta: "
+						+ (opcaoCorretaDAO.findById(questao)).getOpcao()
+								.getNomeOpcao());
+				questaoResultado.setRespostaErrada("Opção selecionada: "
+						+ opcaoDAO.findById((opcaoCorreta.getOpcao()))
+								.getNomeOpcao());
 				questoesResultado.add(questaoResultado);
-				
+				questoesErradas++;
+
 			}
-			
-			
+
 		}
 
-		return questoesResultado;
+		notaSimulado = (float) (10.0 / questoesResultado.size());
+		notaSimulado = notaSimulado * questoesCorretas;
+
+		// Informações que retornarão para o usuário, e não irá alternar nada no
+		// banco de dados
+		resultado.setNota(notaSimulado);
+		resultado.setQuestoesResultado(questoesResultado);
+		resultado.setQuestoesCorretas(questoesCorretas);
+		resultado.setQuestoesErradas(questoesErradas);
+
+		return resultado;
+	}
+	
+	
+	@POST
+	@Path("/historico")
+	@Consumes("application/json")
+	@Produces("application/json")
+	public List<Historico> buscarHistorico(Usuario usuario){
+		
+		HistoricoDAO historicoDAO = new HistoricoDAO();
+		List<Historico> historicos = historicoDAO.findByUsuario(usuario);
+		
+		List<Assunto> assuntos;
+		
+		for (Historico historico : historicos) {
+			
+			assuntos = historicoDAO.getAssuntos(historico);
+			
+			historico.setAssuntos(assuntos);
+			
+		}
+		
+		return historicos;
+		
 	}
 
 }

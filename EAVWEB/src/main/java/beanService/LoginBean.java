@@ -12,6 +12,7 @@ import managedBean.PathRedirect;
 import managedBean.UsuarioBean;
 
 import org.apache.http.HttpStatus;
+import org.primefaces.component.fileupload.FileUpload;
 
 import service.EAVService;
 import service.ProviderServiceFactory;
@@ -31,6 +32,7 @@ public class LoginBean implements Serializable {
 			.createServiceClient(EAVService.class);
 
 	private Usuario usuario;
+	private FileUpload fileUpload;
 
 	public LoginBean(Usuario usuario) {
 		this.setUsuario(usuario);
@@ -38,6 +40,7 @@ public class LoginBean implements Serializable {
 
 	public LoginBean() {
 		this.usuario = new Usuario();
+		fileUpload = new FileUpload();
 	}
 
 	public void fazerLogin() {
@@ -74,6 +77,9 @@ public class LoginBean implements Serializable {
 	}
 
 	public void singup() {
+		
+		System.out.println(fileUpload.getNamingContainer());
+		
 		Response response = service.cadastrarUsuario(this.usuario);
 		
 		int status = response.getStatus();
@@ -96,6 +102,14 @@ public class LoginBean implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public FileUpload getFileUpload() {
+		return fileUpload;
+	}
+
+	public void setFileUpload(FileUpload fileUpload) {
+		this.fileUpload = fileUpload;
 	}
 
 }

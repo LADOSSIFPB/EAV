@@ -6,7 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import javax.persistence.Persistence;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.core.Response;
@@ -23,7 +26,10 @@ public class UsuarioDAO extends ServiceDAO implements GenericDAO<Usuario> {
 
 	@Override
 	public Usuario create(Usuario usuario) throws EAVException {
-		ServiceDAO.iniciarConexao();
+		EntityManagerFactory emf = Persistence
+				.createEntityManagerFactory("EAV");
+
+		EntityManager em = emf.createEntityManager();
 
 		String senhaCriptografada;
 		try {
@@ -37,7 +43,8 @@ public class UsuarioDAO extends ServiceDAO implements GenericDAO<Usuario> {
 			} catch (EntityExistsException | RollbackException e) {
 				throw new EAVException(EAVException.USUARIO_EXISTENTE);
 			} finally {
-				ServiceDAO.fecharConexao();
+				em.close();
+				emf.close();
 			}
 		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			throw new EAVException(EAVException.ERRO_CRIPITOGRAFAR);
