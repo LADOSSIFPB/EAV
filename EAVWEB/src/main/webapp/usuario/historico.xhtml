@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/usuario.xhtml">
+
+	<ui:define name="section">
+		<div class="container">
+
+			<h:form>
+				<p:dataTable value="#{historicoBean.historicos}" var="historico"
+					styleClass="panel panel-default">
+
+					<f:facet name="header">
+				Histórico dos simulados realizados</f:facet>
+
+					<p:column headerText="Data">
+
+						<h:outputText value="#{historico.dataSimulado}">
+							<f:convertDateTime locale="pt_BR" type="both" />
+						</h:outputText>
+
+					</p:column>
+
+					<p:column headerText="Disciplina">
+
+						<h:outputText value="#{historico.disciplina.nomeDisciplina}" />
+
+					</p:column>
+
+					<p:column headerText="Assuntos">
+
+						<p:dataList value="#{historico.assuntos}" var="assunto">
+							<h:outputText value="#{assunto.nomeAssunto}" />
+						</p:dataList>
+
+					</p:column>
+
+					<p:column headerText="Nota">
+
+						<h:outputText value="#{historico.notaSimulado}">
+							<f:convertNumber groupingUsed="true" maxFractionDigits="2"
+								minFractionDigits="2" locale="pt_BR" />
+						</h:outputText>
+
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+
+		</div>
+		<link href="../resources/css/style.css" rel="stylesheet" />
+	</ui:define>
+</ui:composition>
